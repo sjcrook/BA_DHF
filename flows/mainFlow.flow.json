@@ -1,0 +1,10 @@
+{
+  "name" : "mainFlow",
+  "description" : "Flow description",
+  "steps" : {
+    "1" : {
+      "stepId" : "extractEmbeddedBase64Data-custom"
+    }
+  },
+  "lastUpdated" : "2023-02-15T19:37:10.433193Z"
+}

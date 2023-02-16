@@ -1,0 +1,16 @@
+{
+  "collections" : [ "consumable-data" ],
+  "permissions" : "data-hub-common,read,data-hub-common,update",
+  "batchSize" : 100,
+  "sourceDatabase" : "data-hub-STAGING",
+  "targetDatabase" : "data-hub-FINAL",
+  "provenanceGranularityLevel" : "off",
+  "name" : "extractEmbeddedBase64Data",
+  "description" : "",
+  "stepDefinitionType" : "custom",
+  "stepDefinitionName" : "extractEmbeddedBase64Data",
+  "selectedSource" : "query",
+  "sourceQuery" : "cts.collectionQuery('raw')",
+  "stepId" : "extractEmbeddedBase64Data-custom",
+  "lastUpdated" : "2023-02-15T18:46:38.423586Z"
+}

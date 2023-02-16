@@ -1,0 +1,16 @@
+#version: "3.7"
+services:
+    ml-binary-advisers:
+        image: marklogicdb/marklogic-db
+        container_name: marklogic-datahub-binary-advisers
+        environment:
+            - MARKLOGIC_INIT=true
+            - MARKLOGIC_ADMIN_USERNAME=admin
+            - MARKLOGIC_ADMIN_PASSWORD=admin
+        ports:
+            - "48000-48005:8000-8005"
+            - "48010-48013:48010-48013"
+        volumes:
+            - marklogic-datahub-binary-advisers:/var/opt/MarkLogic/
+volumes:
+    marklogic-datahub-binary-advisers:

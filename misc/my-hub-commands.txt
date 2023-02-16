@@ -1,0 +1,7 @@
+./gradlew hubCreateFlow -PflowName=mainFlow -i
+
+./gradlew hubCreateStep -PstepName=extractEmbeddedBase64Data -PstepType=custom -PstepDefName=extractEmbeddedBase64Data -i
+
+./gradlew hubAddStepToFlow -PflowName=mainFlow -PstepName=extractEmbeddedBase64Data -PstepType=custom -i
+
+./gradlew hubRunFlow -PflowName=mainFlow -PbatchSize=100 -PthreadCount=4 -PshowOptions=true -PfailHard=true -Psteps="1" -i

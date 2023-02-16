@@ -1,0 +1,346 @@
+
+> Task :tasks
+
+------------------------------------------------------------
+Tasks runnable from root project 'DHF'
+------------------------------------------------------------
+
+Build Setup tasks
+-----------------
+init - Initializes a new Gradle build.
+wrapper - Generates Gradle wrapper files.
+
+Data Hub Conversion tasks
+-------------------------
+hubConvertForHubCentral - Convert flows, mappings and entity models in the local project that were created before version 5.3.0 into the new format required for usage within Hub Central
+hubDeleteLegacyMappings - Delete installed legacy mappings, which are mappings that have not been converted into the format required by Hub Central
+
+Data Hub Deploy tasks
+---------------------
+hubDeploy - Deploy project configuration as a user with the data-hub-security-admin and data-hub-developer roles
+hubDeployAsDeveloper - Deploy DHS-allowable project configuration as a user with the data-hub-developer role
+hubDeployAsSecurityAdmin - Deploy DHS-allowable security resources as a user with the data-hub-security-admin role
+hubDeployToReplica - Deploys DHS-allowable security resources and project configuration, but not any data that would be written to a database, as a user that must have both the data-hub-developer and data-hub-security-admin roles
+
+Data Hub Develop tasks
+----------------------
+hubAddStepToFlow - Add a step to a flow in staging and final databases and write it to your project; specify a flow name via -PflowName=YourFlowName, step name via -PstepName=YourStepName and a step type via -PstepType=(ingestion|mapping|custom|matching|merging|mastering)
+hubApplyProjectZip - Apply a project zip that was downloaded from Hub Central to this project. This will first delete all user files that can be managed with Hub Central, which are: entity models, entity model-based files, flows, and steps. The contents of the project zip, specified via -Pfile=/path/to/hub-central-project.zip, will then be extracted into the project directory.
+hubClearUserArtifacts - Clears all user artifacts in the staging, final databases. Requires -Pconfirm=true to be set so this isn't accidentally executed.
+hubClearUserData - Clears user data in the staging, final, and job databases, only leaving behind hub and user artifacts. Requires sufficient privilege to be able to clear each of the databases. Requires -Pconfirm=true to be set so this isn't accidentally executed.
+hubClearUserModules - Clears user modules in the modules database, only leaving the modules that come with DataHub installation. Requires -Pconfirm=true to be set so this isn't accidentally executed.
+hubClearUserSchemas - Clears all user schemas in the staging, final schemas databases. Requires -Pconfirm=true to be set so this isn't accidentally executed.
+hubCreateEntity - Create a new entity file in the project directory (does not deploy it to MarkLogic)
+hubCreateFlow - Create a new flow file and write it to the staging and final database and to your project; specify a flow name with -PflowName=YourFlowName and optionally generate a default set of inline steps by including -PwithInlineSteps=true
+hubCreateMapping - Create a legacy mapping file in the project directory (does not deploy it to MarkLogic); only use this if your project has not been converted for Hub Central usage
+hubCreateStep - Create a new step file and write it to the staging and final databases and to your project; specify a step name via -PstepName=YourStepName, a step type via -PstepType=(ingestion|mapping|custom|matching|merging)
+hubCreateStepDefinition - Create a new step definition in your project; specify a name via -PstepDefName=YourStepDefName, a type (either 'ingestion' or 'custom'; defaults to 'custom') via -PstepDefType=ingestion|custom, and a format (either 'sjs' or 'xqy'; defaults to 'sjs') via -Pformat=sjs|xqy
+hubDeleteJobs - Deletes job and batch documents in the jobs database that are older than a duration specified  via -PretainDuration=(duration) (e.g. -PretainDuration=P30D to delete every document that is older than 30 days)
+hubDeleteModuleTimestampsFile - Delete the timestamps file that captures when DHF modules were loaded
+hubDeleteProvenance - Deletes provenance records in the jobs database that are older than a duration specified via -PretainDuration=(duration) (e.g. -PretainDuration=P30D to delete every record that is older than 30 days). Requires -Pconfirm=true to be set so this isn't accidentally executed.
+hubDeployArtifacts - Installs hub artifacts such as default mappings and default flows.
+hubDeployUserArtifacts - Installs user artifacts such as entities and mappings.
+hubDeployUserModules - Installs user modules from the plugins and src/main/entity-config directories.
+hubGeneratePii - Generates Security Configuration for all Entity Properties marked 'pii'
+hubGenerateTDETemplates - Generates TDE Templates from the entity definition files. It is possible to only generate TDE templates for specific entities by setting the (comma separated) project property 'entityNames'. E.g. -PentityNames=Entity1,Entity2
+hubGenerateTestSuite - Generate a marklogic-unit-test test suite; requires -Psuite=suiteName to be defined
+hubInstallModules - Installs DHF internal modules.  Requires flow-developer-role or equivalent.
+hubMigrateProvenance - Migrates provenance records in the jobs database to the appropriate staging or final databases and alters the format to match the default format starting in DH 5.7+. Requires -Pconfirm=true to be set so this isn't accidentally executed.
+hubPullChanges - Download project updates made via a Hub Central instance and apply them to this project. This consists of downloading user configuration files (entity models, entity model-based files, flows, and steps) as a zip, deleting all such user configuration files in the project directory, and finally extracting the contents of the downloaded zip into the project directory.
+hubSaveIndexes - Saves the indexes defined in {entity-name}.entity.json file to staging and final entity config in src/main/entity-config/databases directory
+
+Data Hub Legacy Flow tasks
+--------------------------
+hubCreateHarmonizeFlow - Create a DHF 4 harmonize flow in the project directory
+hubCreateInputFlow - Create a DHF 4 input flow in the project directory
+hubDeleteLegacyJobs - Delete DHF 4 jobs data
+hubExportLegacyJobs - Export DHF jobs data
+hubImportLegacyJobs - Import DHF 4 jobs data
+hubRunLegacyFlow - Run a DHF 4 flow
+
+Data Hub Run tasks
+------------------
+hubDisableDebugging - Disables debugging on the running DHF server. Requires flow-developer-role or equivalent.
+hubDisableTracing - Disables tracing on the running DHF server. Requires flow-developer-role or equivalent.
+hubEnableDebugging - Enables debugging on the running DHF server. Requires flow-developer-role or equivalent.
+hubEnableTracing - Enables tracing on the running DHF server. Requires flow-developer-role or equivalent.
+hubFixCreatedByStep - Fix the value of the datahubCreatedByStep metadata key on documents where the value is a step definition name instead of a step name. Specify the database to perform this in via -Pdatabase=(name of staging or final database).
+hubMergeEntities - Manually merge documents together given a set of options.
+ -PmergeURIs=<URI1>,...,<URIn> –  the URIs of the documents to merge, separated by commas.
+-PflowName=<true|false> – optional; if true, the merged document will be moved to an archive collection; if false, the merged document will be deleted. Defaults to true.
+-Pstep=<masteringStepNumber> – optional; The number of the mastering step with settings. Defaults to 1.
+-Ppreview=<true|false> – optional; if true, the merge doc is returned in the response body and not committed to the database; if false, the merged document will be saved. Defaults to false.
+-Poptions=<stepOptionOverrides> – optional; Any overrides to the mastering step options. Defaults to {}.
+hubPreviewFixCreatedByStep - Previews running hubFixCreatedByStep by printing the number of documents whose datahubCreatedByStep metadata key is a step definition name instead of a step name. Specify the database to perform this in via -Pdatabase=(name of staging or final database).
+hubRunFlow - Run a flow; requires defining flowName at a minimum; e.g. -PflowName=myFlow
+hubUnmergeEntities - Reverses the last set of merges made into the given merge URI.
+ -PmergeURI=URI. 
+-PretainAuditTrail=<true|false> (default true) determines if provenance for the merge/unmerge is kept. 
+-PblockFutureMerges=<true|false> (default true) ensures that the documents won't be merged together in the next mastering run.
+hubUnmergeRecord - Manually unmerge documents from merged documents.
+ -PmergeURI=URI1 –  the URI of the merged documents.
+-PretainAuditTrail=<true|false> (default true) determines if provenance for the merge/unmerge is kept. 
+-PblockFutureMerges=<true|false> (default true) ensures that the documents won't be merged together in the next mastering run. 
+-PremoveURIs=<URI1>,...,<URIn> –  the URIs of the documents to unmerge, separated by commas.
+
+Data Hub Setup tasks
+--------------------
+hubDescribeRole - Describes a MarkLogic role identified by -Prole=(name of role)
+hubDescribeUser - Describes a MarkLogic user identified by -Puser=(name of user)
+hubExportProject - Exports the contents of the hub project directory
+hubInit - Initialize the project directory before deploying to MarkLogic
+hubPrintInheritableRoles - Print the roles that can be inherited in a custom role created by a user with the data-hub-security-admin role
+hubUpdate - Update the project directory; typically run after upgrading the version of DHF used in this project's Gradle file
+hubVersion - Prints the versions of Data Hub and MarkLogic associated with the value of mlHost, and also prints the version of Data Hub associated with this Gradle task
+
+Help tasks
+----------
+buildEnvironment - Displays all buildscript dependencies declared in root project 'DHF'.
+dependencies - Displays all dependencies declared in root project 'DHF'.
+dependencyInsight - Displays the insight into a specific dependency in root project 'DHF'.
+help - Displays a help message.
+javaToolchains - Displays the detected java toolchains. [incubating]
+outgoingVariants - Displays the outgoing variants of root project 'DHF'.
+projects - Displays the sub-projects of root project 'DHF'.
+properties - Displays the properties of root project 'DHF'.
+tasks - Displays the tasks runnable from root project 'DHF'.
+
+Ml-gradle Admin tasks
+---------------------
+mlInit - Perform a one-time initialization of a MarkLogic server; uses the properties 'mlLicenseKey' and 'mlLicensee'
+mlInstallAdmin - Perform a one-time installation of an admin user; uses the properties 'mlAdminUsername'/'mlUsername' and 'mlAdminPassword'/'mlPassword'; the realm, which defaults to 'public', can optionally be specified on the command line via '-Prealm='
+
+Ml-gradle Alert tasks
+---------------------
+mlDeleteAllAlertConfigs - Delete all alert configs, which also deletes all of the actions rules associated with them
+mlDeployAlerting - Deploy each alerting resource - configs, actions, and rules - in the configuration directory
+
+Ml-gradle Cluster tasks
+-----------------------
+mlAddHost - Add host to the cluster; must define 'host', 'hostGroup' (optional), and 'hostZone' (optional) properties
+mlDisableSslFips - Disable SSL FIPS across the cluster
+mlEnableSslFips - Enable SSL FIPS across the cluster
+mlModifyCluster - Modify the properties of the local cluster based on the ml-config/clusters/local-cluster.json file
+mlRemoveHost - Remove a host from the cluster; must define 'host' property
+mlRestartCluster - Restart the local cluster
+
+Ml-gradle Configuration tasks
+-----------------------------
+mlDeployConfigurations - Deploy each configuration (requires at least MarkLogic 9.0-5) in the configuration directory
+
+Ml-gradle CPF tasks
+-------------------
+mlDeployCpf - Deploy each CPF resource - domains, pipelines, and CPF configs - in the configuration directory
+mlLoadDefaultPipelines - Load default pipelines into a triggers database
+mlRedeployCpf - Clears the triggers database and then calls mlDeployCpf; be sure to reload custom triggers after doing this, as they will be deleted as well
+
+Ml-gradle Data tasks
+--------------------
+mlLoadData - Load files as documents into a content database (or on a DHF project, the final database)
+
+Ml-Gradle Data Movement tasks
+-----------------------------
+mlAddCollections - Add collections to documents. Run with -PjobProperties (no value needed) for more information.
+mlAddPermissions - Add permissions to documents. Run with -PjobProperties (no value needed) for more information.
+mlDeleteCollections - Delete collections. Run with -PjobProperties (no value needed) for more information.
+mlExportBatchesToDirectory - Export batches of documents to files in a directory. Run with -PjobProperties (no value needed) for more information.
+mlExportBatchesToZips - Export batches of documents to zips in a directory. Run with -PjobProperties (no value needed) for more information.
+mlExportToFile - Export documents to a single file. Run with -PjobProperties (no value needed) for more information.
+mlExportToZip - Export documents to a single zip. Run with -PjobProperties (no value needed) for more information.
+mlRemoveCollections - Remove collections from documents. Run with -PjobProperties (no value needed) for more information.
+mlRemovePermissions - Remove permissions from documents. Run with -PjobProperties (no value needed) for more information.
+mlSetCollections - Set collections on documents. Run with -PjobProperties (no value needed) for more information.
+mlSetPermissions - Set permissions on documents. Run with -PjobProperties (no value needed) for more information.
+
+Ml-gradle Database tasks
+------------------------
+mlClearContentDatabase - Deletes all documents in the content database; requires -Pconfirm=true to be set so this isn't accidentally executed
+mlClearDatabase - Deletes all documents in a database specified by -Pdatabase=(name); requires -Pconfirm=true to be set so this isn't accidentally executed
+mlClearModulesDatabase - Deletes potentially all of the documents in the modules database; has a property for excluding documents from deletion
+mlClearSchemasDatabase - Deletes all documents in the schemas database. Note that this includes those created via the deployment of resources such as temporal collections and view schemas. You may want to use mlDeleteUserSchemas instead.
+mlClearTriggersDatabase - Deletes all documents in the triggers database
+mlDeleteDatabase - Delete a database along with all of its forests and any replicas; requires -Pconfirm=true to be set so this isn't accidentally executed
+mlDeployDatabases - Deploy each database, updating it if it exists, in the configuration directory
+mlMergeContentDatabase - Merge the database named by mlAppConfig.contentDatabaseName
+mlMergeDatabase - Merge the database named by the project property dbName; e.g. gradle mlMergeDatabase -PdbName=my-database
+mlReindexContentDatabase - Reindex the database named by mlAppConfig.contentDatabaseName
+mlReindexDatabase - Reindex the database named by the project property dbName; e.g. gradle mlReindexDatabase -PdbName=my-database
+mlSetContentUpdatesAllowed - Sets updated-allowed on each primary forest for the content database; must set the mode via e.g. -Pmode=flash-backup
+mlUpdateIndexes - Update every database by sending a payload that only contains properties related to how data is indexed
+
+Ml-gradle Deploy tasks
+----------------------
+mlDeleteResourceTimestampsFile - Delete the properties file in the build directory (stored there by default) that keeps track of when each resource was last deployed; the file path can be overridden by setting the filePath property of this class
+mlDeploy - Deploys all application resources in the configuration directory and allows for additional steps via mlPostDeploy.dependsOn. Use -Pignore to specify a comma-delimited list of short class names of ml-app-deployer command classes to ignore while deploying.
+mlDeployToReplica - Deploys application resources in the same manner as mlDeploy, but will not deploy anything that involves writing data to a database - such as modules, schemas, and triggers - thus making it safe for use when deploying an application to a replica cluster
+mlPostDeploy - Add dependsOn to this task to add tasks at the end of mlDeploy
+mlPostUndeploy - Add dependsOn to this task to add tasks at the end of mlUndeploy
+mlPreviewDeploy - Preview a deployment without making any changes
+mlRedeploy - Clears the modules database and then deploys the application
+mlUndeploy - Undeploys all application resources in the configuration directory and allows for additional steps via mlPostUndeploy.dependsOn; requires -Pconfirm=true to be set so this isn't accidentally executed
+
+Ml-gradle Development tasks
+---------------------------
+mlCreateResource - Create a new resource extension in the modules services directory; use -PresourceName and -PresourceType to set the resource name and type (either xqy or sjs)
+mlCreateTransform - Create a new transform in the modules transforms directory; use -PtransformName and -PtransformType to set the transform name and type (xqy, xsl, or sjs)
+mlExportResources - Export resources based on a properties file specified via -PpropertiesFile, -Pprefix, or -Pregex; use -PincludeTypes to select resource types to export via a comma-delimited string; use -PexportPath to specify where to export resources to
+mlNewAmp - Generate a new amp resource file. Non-complex properties can be specified via -Pml-(name of property).
+mlNewDatabase - Generate a new database resource file. Non-complex properties can be specified via -Pml-(name of property).
+mlNewExternalSecurity - Generate a new external security resource file. Non-complex properties can be specified via -Pml-(name of property).
+mlNewGroup - Generate a new group resource file. Non-complex properties can be specified via -Pml-(name of property).
+mlNewPrivilege - Generate a new privilege resource file. Non-complex properties can be specified via -Pml-(name of property).
+mlNewProject - Run a wizard for creating a new project, which includes running mlScaffold
+mlNewProtectedCollection - Generate a new protected collection resource file. Non-complex properties can be specified via -Pml-(name of property).
+mlNewRole - Generate a new role resource file. Non-complex properties can be specified via -Pml-(name of property).
+mlNewServer - Generate a new server resource file. Non-complex properties can be specified via -Pml-(name of property).
+mlNewTask - Generate a new task resource file. Non-complex properties can be specified via -Pml-(name of property).
+mlNewTrigger - Generate a new trigger resource file. A triggers database name must be specified via -Pdatabase=(database name). Non-complex properties can be specified via -Pml-(name of property).
+mlNewUser - Generate a new user resource file. Non-complex properties can be specified via -Pml-(name of property).
+mlPrepareBundles - Downloads (if necessary) and unzips in the build directory all mlBundle dependencies
+mlPrepareRestApiDependencies - Deprecated in 3.13.0; please use mlPrepareBundles instead
+mlPrintCommands - Print information about each command used by mlDeploy and mlUndeploy
+mlPrintProperties - Print all of the properties supported by ml-gradle
+mlPrintTokens - Print the customTokens map on the mlAppConfig object (typically for debugging purposes)
+mlScaffold - Generate project scaffold for a new project
+
+Ml-gradle Entity Services tasks
+-------------------------------
+mlGenerateModelArtifacts - Generate model artifacts for the Entity Services models in the default directory of ./data/entity-services
+
+Ml-gradle Flexible Replication tasks
+------------------------------------
+mlDeleteAllFlexrepConfigs - Delete all Flexrep configs and their associated targets
+mlDeployFlexrep - Deploy Flexrep configs and targets in the configuration directory
+mlDeployFlexrepAtPath - Deploy all Flexrep resources in a directory under ml-config/flexrep with a name matching the property mlFlexrepPath
+mlDisableAllFlexrepTargets - Disable every target on every flexrep config
+mlEnableAllFlexrepTargets - Enable every target on every flexrep config
+
+Ml-gradle Forest tasks
+----------------------
+mlConfigureForestReplicas - Deprecated - configure forest replicas via the command.forestNamesAndReplicaCounts map
+mlDeleteForestReplicas - Deprecated - delete forest replicas via the command.forestNamesAndReplicaCounts map; requires -Pconfirm=true to be set so this isn't accidentally executed
+mlDeployCustomForests - Deploy custom forests as defined in subdirectories of the forests configuration directory
+mlDeployForestReplicas - Prefer this over mlConfigureForestReplicas; it does the same thing, but uses the ConfigureForestReplicasCommand that is used by mlDeploy
+mlPrintForestPlan - Print a list of primary forests to be created for a database specified by -Pdatabase=(name of database) when the database is next deployed
+
+Ml-gradle Group tasks
+---------------------
+mlDeployGroups - Deploy each group, updating it if it exists, in the configuration directory
+mlSetTraceEvents - Set trace events via a comma-delimited string - e.g. -Pevents=event1,event2
+
+Ml-gradle Host tasks
+--------------------
+mlAssignHostsToGroups - Assign each specified host to its corresponding group, as defined by the mlHostGroups property
+
+Ml-gradle Mimetypes tasks
+-------------------------
+mlDeployMimetypes - Deploy each mimetype, updating it if it exists, in the configuration directory
+mlUndeployMimetypes - Undeploy each mimetype defined in the configuration directory
+
+Ml-gradle Modules tasks
+-----------------------
+mlDeleteModuleTimestampsFile - Delete the properties file in the build directory that keeps track of when each module was last loaded
+mlExportModules - Export modules matching a URI pattern of ** (can be overridden via -PuriPattern) from the database defined by mlModulesDatabaseName (can be overridden via -PdatabaseName) to the last path defined by mlModulePaths (can be overridden via -PexportPath). For each module that cannot be exported, an error will be logged; an error will be thrown instead by setting -PlogErrors to false.
+mlLoadModules - Loads modules from directories defined by mlAppConfig or via a property on this task
+mlReloadModules - Reloads modules by first clearing the modules database and then loading modules
+mlWatch - Run a loop that checks for new/modified modules every second and loads any that it finds. To ignore files that are already dirty and only process new changes, include -PignoreDirty=true . 
+
+Ml-gradle Plugin tasks
+----------------------
+mlInstallPlugins - Makes, inserts, and installs system plugins defined in the project and by mlBundle dependencies
+mlUninstallPlugins - Makes and uninstalls system plugins defined in the project and by mlBundle dependencies
+
+Ml-gradle qconsole tasks
+------------------------
+mlExportWorkspaces - Export workspaces from qconsole
+mlImportWorkspaces - Import workspaces into qconsole
+
+Ml-gradle Rebalancer tasks
+--------------------------
+mlDeployPartitionQueries - Deploy database-specific partition queries
+mlDeployPartitions - Deploy database-specific partitions
+mlTakePartitionOffline - Take a partition offline. Use -Pdatabase=dbName and -Ppartition=partitionName to specify the database and partition names.
+mlTakePartitionOnline - Take a partition online. Use -Pdatabase=dbName and -Ppartition=partitionName to specify the database and partition names.
+
+Ml-gradle REST API tasks
+------------------------
+mlDeployRestApis - Deploy the REST API instances defined by a resource file or the mlRestPort/mlTestRestPort properties
+
+Ml-gradle Roxy tasks
+--------------------
+mlRoxyMigrateBuildSteps - Migrate build steps from deploy/app_specific.rb into custom Gradle tasks. Use -ProxyProjectPath to define the location of your Roxy project, and -PappSpecificPath to define a path other than deploy/app_specific.rb
+mlRoxyMigrateFiles - Migrate Roxy source files into this Gradle project. Use -ProxyProjectPath to define the location of your Roxy project.
+mlRoxyMigrateProject - Run all tasks for migrating a Roxy project into this Gradle project. Use -ProxyProjectPath to define the location of your Roxy project.
+mlRoxyMigrateProperties - Migrate Roxy properties into the gradle.properties file in this project. Use -ProxyProjectPath to define the location of your Roxy project.
+
+Ml-gradle Schemas tasks
+-----------------------
+mlDeleteUserSchemas - Delete documents in a schemas database that were not created via the deployment of resources such as temporal collections or view schemas
+mlLoadSchemas - Loads files into schema databases, including schema files that are part of mlBundle dependencies
+mlReloadSchemas - Deletes user schemas via mlDeleteUserSchemas and then loads schemas via mlLoadSchemas
+
+Ml-gradle Security tasks
+------------------------
+mlDeployAmps - Deploy each amp, updating it if it exists, in the configuration directory
+mlDeployCertificateAuthorities - Deploy each certificate authority, updating it if it exists, in the configuration directory
+mlDeployCertificateTemplates - Deploy each certificate template, updating it if it exists, in the configuration directory
+mlDeployExternalSecurity - Deploy external security configurations, updating each if it exists, in the configuration directory
+mlDeployPrivileges - Deploy each privilege, updating it if it exists, in the configuration directory
+mlDeployProtectedCollections - Deploy each protected collection, updating it if it exists, in the configuration directory
+mlDeployProtectedPaths - Deploy each protected path, updating it if it exists, in the configuration directory
+mlDeployQueryRolesets - Deploy each query roleset, updating it if it exists, in the configuration directory
+mlDeployRoles - Deploy each role, updating it if it exists, in the configuration directory
+mlDeploySecurity - Deploy each security resource, updating it if it exists, in the configuration directory
+mlDeployUsers - Deploy each user, updating it if it exists, in the configuration directory
+mlUndeployAmps - Undeploy (delete) each amp in the configuration directory
+mlUndeployCertificateTemplates - Undeploy (delete) each certificate template in the configuration directory
+mlUndeployExternalSecurity - Undeploy (delete) each external security configuration in the configuration directory
+mlUndeployPrivileges - Undeploy (delete) each privilege in the configuration directory
+mlUndeployProtectedCollections - Undeploy (delete) each protected collection in the configuration directory
+mlUndeployProtectedPaths - Undeploy (delete) each protected path in the configuration directory
+mlUndeployQueryRolesets - Undeploy (delete) each query roleset in the configuration directory
+mlUndeployRoles - Undeploy (delete) each role in the configuration directory
+mlUndeploySecurity - Undeploy (delete) all security resources in the configuration directory
+mlUndeployUsers - Undeploy (delete) each user in the configuration directory
+
+Ml-gradle Server tasks
+----------------------
+mlDeployServers - Updates the REST API server (if it exists) and deploys each other server, updating it if it exists, in the configuration directory 
+mlUndeployOtherServers - Delete any non-REST API servers (e.g. ODBC and XBC servers) defined by server files in the configuration directory
+
+Ml-gradle Shell tasks
+---------------------
+mlShell - Run groovysh with MarkLogic-specific support built in
+
+Ml-gradle SQL tasks
+-------------------
+mlDeployViewSchemas - Deploy each SQL view schema, updating it if it exists, in the configuration directory
+
+Ml-gradle Task tasks
+--------------------
+mlDeleteAllTasks - Delete all scheduled tasks in the cluster
+mlDeployTasks - Deploy each scheduled task, updating it if it exists, in the configuration directory; also updates the task server if a task server config file exists
+mlDisableAllTasks - Disable each scheduled task in the group identified by the mlGroupName property, which defaults to 'Default'
+mlEnableAllTasks - Enable each scheduled task in the group identified by the mlGroupName property, which defaults to 'Default'
+mlUndeployTasks - Undeploy (delete) each scheduled task in the configuration directory
+mlWaitForTaskServer - Wait for the task server to not have any requests in progress
+
+Ml-gradle Temporal tasks
+------------------------
+mlDeployTemporal - Deploy temporal configuration. Note that (currently) you can't update the temporal configuration (collection properties and LSQT properties excepted)
+
+Ml-gradle Trigger tasks
+-----------------------
+mlDeployTriggers - Deploy each trigger, updating it if it exists, in the configuration directory
+
+Ml-gradle Unit Test tasks
+-------------------------
+mlGenerateUnitTestSuite - Generate a marklogic-unit-test test suite. The test suite files are written to src/test/ml-modules/root/test/suites by default; use -PsuitesPath to override this. Can use -PsuiteName to override the name of the test suite, and -PtestName to override the name of the test module.
+mlUnitTest - Run tests found under /test/suites in the modules database. Connects to MarkLogic via the REST API server defined by mlTestRestPort (or by mlRestPort if mlTestRestPort is not set), and uses mlRest* properties for authentication. Use -PunitTestResultsPath to override where test result files are written, which defaults to build/test-results/marklogic-unit-test. Use -PrunCodeCoverage to enable code coverage support when running the tests. Use -PrunTeardown and -PrunSuiteTeardown to control whether teardown and suite teardown scripts are run; these default to 'true' and can be set to 'false' instead. 
+
+To see all tasks and more detail, run gradle tasks --all
+
+To see more detail about a task, run gradle help --task <task>
+
+BUILD SUCCESSFUL in 602ms
+1 actionable task: 1 executed
