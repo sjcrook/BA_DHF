@@ -1,0 +1,10 @@
+{
+    "user-name": "maverick",
+    "description": "description",
+    "password": "goose",
+    "role": [
+        "hub-central-developer",
+        "data-hub-developer",
+        "pii-reader"
+    ]
+}

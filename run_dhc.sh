@@ -1,0 +1,1 @@
+java -Dserver.port=48080 -jar marklogic-data-hub-central-5.8.0.war --spring.config.additional-location=file:./gradle.properties,file:./gradle-local.properties

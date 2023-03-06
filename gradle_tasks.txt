@@ -2,7 +2,7 @@
 > Task :tasks
 
 ------------------------------------------------------------
-Tasks runnable from root project 'DHF'
+Tasks runnable from root project 'BA_DHF'
 ------------------------------------------------------------
 
 Build Setup tasks
@@ -95,15 +95,15 @@ hubVersion - Prints the versions of Data Hub and MarkLogic associated with the v
 
 Help tasks
 ----------
-buildEnvironment - Displays all buildscript dependencies declared in root project 'DHF'.
-dependencies - Displays all dependencies declared in root project 'DHF'.
-dependencyInsight - Displays the insight into a specific dependency in root project 'DHF'.
+buildEnvironment - Displays all buildscript dependencies declared in root project 'BA_DHF'.
+dependencies - Displays all dependencies declared in root project 'BA_DHF'.
+dependencyInsight - Displays the insight into a specific dependency in root project 'BA_DHF'.
 help - Displays a help message.
-javaToolchains - Displays the detected java toolchains. [incubating]
-outgoingVariants - Displays the outgoing variants of root project 'DHF'.
-projects - Displays the sub-projects of root project 'DHF'.
-properties - Displays the properties of root project 'DHF'.
-tasks - Displays the tasks runnable from root project 'DHF'.
+javaToolchains - Displays the detected java toolchains.
+outgoingVariants - Displays the outgoing variants of root project 'BA_DHF'.
+projects - Displays the sub-projects of root project 'BA_DHF'.
+properties - Displays the properties of root project 'BA_DHF'.
+tasks - Displays the tasks runnable from root project 'BA_DHF'.
 
 Ml-gradle Admin tasks
 ---------------------
@@ -338,9 +338,9 @@ Ml-gradle Unit Test tasks
 mlGenerateUnitTestSuite - Generate a marklogic-unit-test test suite. The test suite files are written to src/test/ml-modules/root/test/suites by default; use -PsuitesPath to override this. Can use -PsuiteName to override the name of the test suite, and -PtestName to override the name of the test module.
 mlUnitTest - Run tests found under /test/suites in the modules database. Connects to MarkLogic via the REST API server defined by mlTestRestPort (or by mlRestPort if mlTestRestPort is not set), and uses mlRest* properties for authentication. Use -PunitTestResultsPath to override where test result files are written, which defaults to build/test-results/marklogic-unit-test. Use -PrunCodeCoverage to enable code coverage support when running the tests. Use -PrunTeardown and -PrunSuiteTeardown to control whether teardown and suite teardown scripts are run; these default to 'true' and can be set to 'false' instead. 
 
-To see all tasks and more detail, run gradle tasks --all
+To see all tasks and more detail, run gradlew tasks --all
 
-To see more detail about a task, run gradle help --task <task>
+To see more detail about a task, run gradlew help --task <task>
 
-BUILD SUCCESSFUL in 602ms
+BUILD SUCCESSFUL in 648ms
 1 actionable task: 1 executed

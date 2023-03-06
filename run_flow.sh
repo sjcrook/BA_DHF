@@ -1,0 +1,1 @@
+./gradlew hubRunFlow -PflowName=mainFlow -Psteps="1" -i
